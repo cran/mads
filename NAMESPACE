@@ -1,0 +1,8 @@
+import(mrds)
+S3method(summary,ma)
+S3method(summary,ma.allspecies)
+S3method(summary,ma.allunid)
+S3method(summary,ma.analysis)
+S3method(summary,ma.species)
+S3method(summary,ma.unid)
+export(execute.multi.analysis)
