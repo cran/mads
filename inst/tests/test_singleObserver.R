@@ -15,8 +15,8 @@ test_that("Test Analyses", {
   load(ex.filename)
   ex.filename<-system.file("testData/input_checks/sample_table.robj", package="mads")
   load(ex.filename)
-  ex.filename<-system.file("testData/input_checks/ddf_dat_CD.csv", package="mads")
-  test.rep.data <- read.csv(file = "", header = TRUE)
+  #ex.filename<-system.file("testData/input_checks/ddf_dat_CD.csv", package="mads")
+  #test.rep.data <- read.csv(file = "", header = TRUE)
   
   #run ddf analyses
   ddf.1 <- ddf(dsmodel = ~mcds(key = "hn", formula = ~ size), method='ds', data=ddf.dat,meta.data=list(width=4)) 
