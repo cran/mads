@@ -1,10 +1,10 @@
 Package: mads
-Depends: mrds
+Depends: mrds, stats
 Suggests: testthat
 Type: Package
 Title: Multi-Analysis Distance Sampling
-Version: 0.1.2
-Date: 2015-02-27
+Version: 0.1.3
+Date: 2015-09-25
 Author: Laura Marshall
 Maintainer: Laura Marshall <lhm@st-and.ac.uk>
 Description: Performs distance sampling analyses on a number of species
@@ -26,7 +26,7 @@ Collate: 'accumulate.results.R' 'calculate.dht.R'
         'summary.ma.allspecies.R' 'summary.ma.allunid.R'
         'summary.ma.analysis.R' 'summary.ma.R' 'summary.ma.species.R'
         'summary.ma.unid.R'
-Packaged: 2015-02-27 04:45:12 UTC; laura
 NeedsCompilation: no
+Packaged: 2015-09-25 09:40:13 UTC; laura
 Repository: CRAN
-Date/Publication: 2015-02-27 07:24:21
+Date/Publication: 2015-09-25 14:32:42
