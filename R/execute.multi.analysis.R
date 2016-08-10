@@ -251,11 +251,11 @@ execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, 
       }
 
       #Fit ddf models to all species codes
-      ddf.results <- fit.ddf.models(ddf.dat.working, unique.model.names, ddf.model.objects, ddf.model.options$criterion, bootstrap.ddf.statistics, n, MAE.warnings)
-      if(length(ddf.results) > 1){
-        bootstrap.ddf.statistics <- ddf.results$bootstrap.ddf.statistics
-        ddf.results <- ddf.results$ddf.results
-        MAE.warnings <- ddf.results$mae.warnings
+      ddf.results.list <- fit.ddf.models(ddf.dat.working, unique.model.names, ddf.model.objects, ddf.model.options$criterion, bootstrap.ddf.statistics, n, MAE.warnings)
+      if(length(ddf.results.list) > 1){
+        bootstrap.ddf.statistics <- ddf.results.list$bootstrap.ddf.statistics
+        ddf.results <- ddf.results.list$ddf.results
+        MAE.warnings <- ddf.results.list$mae.warnings
       }else{
         #If the ddf results are not valid for all species move to next bootstrap iteration
         MAE.warnings <- ddf.results$mae.warnings

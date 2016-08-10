@@ -1,3 +1,12 @@
+mads 0.1.4
+----------
+
+Notes
+
+  * Bug fix for warnings
+  * Catches the case when fitted values in ddf are 0
+  * Updated package structure
+
 mads 0.1.3
 ----------
 
