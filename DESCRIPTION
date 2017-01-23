@@ -3,13 +3,13 @@ Depends: mrds, stats
 Suggests: testthat
 Type: Package
 Title: Multi-Analysis Distance Sampling
-Version: 0.1.4
-Date: 2016-08-10
+Version: 0.1.5
 Author: Laura Marshall
 Maintainer: Laura Marshall <lhm@st-and.ac.uk>
 Description: Performs distance sampling analyses on a number of species
     accounting for unidentified sightings, model uncertainty and covariate
     uncertainty.
+BugReports: https://github.com/DistanceDevelopment/mads/issues
 License: GPL (>= 2)
 Collate: 'accumulate.results.R' 'calculate.dht.R'
         'check.bootstrap.options.r' 'check.convergence.R'
@@ -27,6 +27,6 @@ Collate: 'accumulate.results.R' 'calculate.dht.R'
         'summary.ma.allunid.R' 'summary.ma.analysis.R' 'summary.ma.R'
         'summary.ma.species.R' 'summary.ma.unid.R'
 NeedsCompilation: no
-Packaged: 2016-08-10 13:59:30 UTC; laura
+Packaged: 2017-01-23 12:25:52 UTC; laura
 Repository: CRAN
-Date/Publication: 2016-08-10 20:43:31
+Date/Publication: 2017-01-23 15:00:12

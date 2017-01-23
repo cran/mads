@@ -1,12 +1,12 @@
-caca8abef8cb961c7d38672e91a93d45 *DESCRIPTION
+9214dc4b2196a8bfd43125292db47a41 *DESCRIPTION
 3512aa74e5d5184ad1fe3a85337330d8 *NAMESPACE
-81a780f63948c0b5766ffac644896c85 *NEWS
+bc89f5bb8fc267f84496b09fd7beed0a *NEWS
 905ebd8d603802be489562c5b2874aa7 *R/accumulate.results.R
 56fecf541f6f0889b43110646ba1f026 *R/calculate.dht.R
 fd68b874f4eaabbf8ff6c0e9cde8bc46 *R/check.bootstrap.options.r
 cbc2eaeab1b3e53c20e1a83ab082e2bf *R/check.convergence.R
 7bae56eda3fc936b95c45ed1c9d5691a *R/check.covar.uncertainty.R
-1a9ca42baa32f8d35ff3e08722a39b76 *R/check.ddf.models.R
+365ac9c7a48048675215083050ec1da4 *R/check.ddf.models.R
 aaac7e512311b4e31bc658aa7d5612c4 *R/check.fitted.R
 7d5a044263f561d2df189faaa156127e *R/check.species.code.definitions.R
 13060d63360fdf640f73ee432286b0aa *R/check.species.presence.r
@@ -14,7 +14,7 @@ aaac7e512311b4e31bc658aa7d5612c4 *R/check.fitted.R
 f92bf7ba99bbe69b7ce40b7e34fd0d56 *R/create.param.arrays.r
 58a5b3b72adc09595dc993f034912832 *R/create.result.arrays.R
 339550093c26128feab20149c808dbcc *R/execute.multi.analysis.R
-b5de4784d2deed8215df121237d3f8fe *R/fit.ddf.models.R
+da66b0fc48cdf004f42862f2157cc648 *R/fit.ddf.models.R
 c91e2f7903e86c954519e4cf8d93db8a *R/format.dht.results.R
 f4c56bd7ddaf51acaea692ed0a5b92d3 *R/get.datasets.R
 5bc404b382d22a6aa5a076a1b872e404 *R/glossary.R
@@ -72,5 +72,7 @@ e8e6bc826b0f7e9640833faa291de346 *man/summary.ma.Rd
 9c838296687a7ae7b5e4eb2a3c152e03 *man/summary.ma.unid.Rd
 fde0b96372d17b7535588045d3774dc1 *tests/test-that.R
 6d02783e25d6aaf0a0ae07bfe0f6a0f2 *tests/testthat/test_DataInputChecks.R
+93792c5631b4631689140e9ade1aa344 *tests/testthat/test_doubleObserver.R
+3680b8adabacf78ec0e69cf46956ca99 *tests/testthat/test_mrdsOptions.R
 b1b28461946c529a7583991ed6a1150b *tests/testthat/test_resampling.R
 d82fd66d10d598114d3bfffdfbadbee2 *tests/testthat/test_singleObserver.R
