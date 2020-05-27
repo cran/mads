@@ -1,6 +1,6 @@
 #' Checks the list of species presence definitions supplied by the user
 #'
-#' Performs a numer of checks to ensure the list has been defined correctly.
+#' Performs a number of checks to ensure the list has been defined correctly.
 #' If no list was specified one is created assuming all species are present in 
 #' all strata.
 #' 
@@ -15,7 +15,7 @@
 #' @note Internal function not intended to be called by user.
 #' @author Laura Marshall
 #' @seealso \code{execute.multi.analysis}
-#' @keywords input validation
+#' @keywords internal
 #'
 check.species.presence <- function(species.presence, species.name, strata.name){
 # 

@@ -1,4 +1,4 @@
-#' Checks the list of species code deifinitions supplied by the user
+#' Checks the list of species code definitions supplied by the user
 #'
 #' Firstly, it checks that there are not multiple definitions for the same species code.
 #' Secondly, it checks that the names of the ddf models correspond to the names 
@@ -16,11 +16,11 @@
 #' @note Internal function not intended to be called by user.
 #' @author Laura Marshall
 #' @seealso \code{execute.multi.analysis}
-#' @keywords input validation
+#' @keywords internal
 #'
 check.species.code.definitions <- function(species.code.definitions, species.name){
 # 
-# check.species.code.definitions function to check the list of species code deifinitions supplied by the user 
+# check.species.code.definitions function to check the list of species code definitions supplied by the user 
 #
 # Arguments:  #
 #  species.code.definitions - a list of vectors containing the species codes which correspond to the 

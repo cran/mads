@@ -1,6 +1,6 @@
-#' Parametrcally resamples selected variables in the dataset.
+#' Parametrically resamples selected variables in the dataset.
 #'
-#' Parametricelly resamples specified variables in the dataset based on a 
+#' Parametrically resamples specified variables in the dataset based on a 
 #' measure of uncertainty and a sampling distribution supplied by the user.
 #'
 #' This function may also apply a correction factor. If numeric is specified the
@@ -17,8 +17,8 @@
 #' @return list of dataframes containing the parametrically resampled data
 #' @note Internal function not intended to be called by user.
 #' @author Laura Marshall
-#' @keywords data manipulation
-#' @importFrom stats rnorn
+#' @keywords internal
+#' @importFrom stats rnorm
 #' @importFrom stats rpois
 #'         
 resample.covariates <- function(ddf.dat.working, covariate.uncertainty, MAE.warnings){

@@ -1,10 +1,10 @@
 #' Summary of multi-analysis object
 #' 
-#' Provides asummary of the fitted detection probability model
+#' Provides a summary of the fitted detection probability model
 #' parameters, model selection criterion, and optionally abundance in the
 #' covered (sampled) region and its standard error for all species.
 #' 
-#' @export summary ma.allunid
+#' @export
 #' @method summary ma.allunid
 #' @aliases summary.ma.allunid
 #' @param object a \code{ma} model object

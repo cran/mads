@@ -1,4 +1,4 @@
-#' Print a summary of an element of a multi-analysis result correcponding to 
+#' Print a summary of an element of a multi-analysis result corresponding to 
 #' a single species included in the analyses.
 #' 
 #' Provides a summary of the fitted detection probability model
@@ -6,7 +6,7 @@
 #' covered (sampled) region and its standard error. What is printed depends
 #' on the corresponding call to summary.
 #' 
-#' @export summary ma.species
+#' @export
 #' @method summary ma.species
 #' @aliases summary.ma.species
 #' @param object a summary of \code{ma} model object
@@ -59,7 +59,7 @@ summary.ma.species <- function (object, species=NULL, ...){
     selected <- FALSE
     if(!is.null(object$ddf[[model.names[m]]]$ds.param)){
       cat("\nParameter estimates (dsmodel):\n")
-      if(class(object$ddf[[model.names[m]]]$ds.param) == "matrix"){
+      if("matrix" %in% class(object$ddf[[model.names[m]]]$ds.param)){
         param.estimates <- apply(object$ddf[[model.names[m]]]$ds.param, 2, mean)
         param.se <- apply(object$ddf[[model.names[m]]]$ds.param, 2, sd)
         print(array(c(param.estimates, param.se), dim=c(length(param.estimates),2), dimnames=list(dimnames(object$ddf[[model.names[m]]]$ds.param)[[2]], c("Estimate", "se"))))
@@ -74,7 +74,7 @@ summary.ma.species <- function (object, species=NULL, ...){
     }
     if(!is.null(object$ddf[[model.names[m]]]$mr.param)){
       cat("\nParameter estimates (mrmodel):\n")
-      if(class(object$ddf[[model.names[m]]]$mr.param) == "matrix"){
+      if("matrix" %in% class(object$ddf[[model.names[m]]]$mr.param)){
         param.estimates <- apply(object$ddf[[model.names[m]]]$mr.param, 2, mean)
         param.se <- apply(object$ddf[[model.names[m]]]$mr.param, 2, sd)
         print(array(c(param.estimates, param.se), dim=c(length(param.estimates),2), dimnames=list(dimnames(object$ddf[[model.names[m]]]$mr.param)[[2]], c("Estimate", "se"))))

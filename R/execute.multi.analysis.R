@@ -51,9 +51,9 @@
 #' \code{"var"} or \code{"CV"}. The \code{sampling.distribution} should specify
 #' one of the following distributions to parametrically resample from
 #' \code{"Normal"}, \code{"Normal.Absolute"}, \code{"Lognormal.BC"},
-#' \code{"Poisson"} or \code{"TruncPoissonBC"}. The remaning column in this
+#' \code{"Poisson"} or \code{"TruncPoissonBC"}. The remaining column in this
 #' dataset, \code{variable.correction.factos}, allows the user to specify a
-#' value by which the variable should be scaled. If this is not reqied this
+#' value by which the variable should be scaled. If this is not required this
 #' should be set to 1.
 #'
 #' If there are unidentified sightings in the dataset then the
@@ -102,7 +102,7 @@
 #' @param bootstrap if TRUE resamples data to obtain variance estimate
 #' @param bootstrap.options a list of options that can be set 1) n: number of
 #'   repetitions 2) resample: how to resample data ("samples", "observations")
-#' @param silent boolean used to surpress some warning messages
+#' @param silent boolean used to suppress progress counter output
 #' @return object of class "ma" which consists of a list of objects of class
 #'   "ma.element". Each "ma.element" consists of the following elements:
 #'   \item{individuals}{Summary, N (abundance) and D (density) tables}
@@ -117,55 +117,92 @@
 #'     function. In: Advanced Distance Sampling, eds. S.T. Buckland,
 #'     D.R.Anderson, K.P. Burnham, J.L. Laake, D.L. Borchers, and L. Thomas.
 #'     Oxford University Press.
-#'   Gerrodette, T. and Forcada, J. 2005 Non-recovery of two spotted and spinner
+#'   Gerodette, T. and Forcada, J. 2005 Non-recovery of two spotted and spinner
 #'     dolphin populations in the eastern tropical Pacific Ocean. Marine Ecology
 #'     Progress Series, 291:1-21.
-#' @keywords ~distance sampling, unidentified sightings, covariate uncertainty, model uncertainty
+#' @keywords Statistical Model
 #' @examples
+#' 
+#' #Load the example data
+#' data("mads.data")
+#' ddf.data <- mads.data$dist.data
+#' region.table <- mads.data$region.table
+#' sample.table <- mads.data$sample.table
+#' obs.table <- mads.data$obs.table
+#' 
+#' # Fit candidate detection function models using ddf in mrds
+#' # Fit a half normal model
+#' df.all.hn <- ddf(dsmodel = ~mcds(key = "hn", formula = ~ 1),
+#'                  method='ds', data=ddf.data, meta.data=list(width=1))
+#' summary(df.all.hn)
+#' plot(df.all.hn)
+#' # Fit a hazard rate model
+#' df.all.hr <- ddf(dsmodel = ~mcds(key = "hn", formula = ~ 1),
+#'                  method='ds', data=ddf.data, meta.data=list(width=1))
+#' summary(df.all.hr)
+#' plot(df.all.hr)
 #'
-#' \dontrun{
-#'
-#' ex.filename<-system.file("testData/input_checks/ddf_dat.robj", package="mads")
-#' load(ex.filename)
-#' ex.filename<-system.file("testData/input_checks/obs_table.robj", package="mads")
-#' load(ex.filename)
-#' ex.filename<-system.file("testData/input_checks/region_table.robj", package="mads")
-#' load(ex.filename)
-#' ex.filename<-system.file("testData/input_checks/sample_table.robj", package="mads")
-#' load(ex.filename)
-#'
-#' #run ddf analyses
-#' ddf.1 <- ddf(dsmodel = ~mcds(key = "hn", formula = ~ size),
-#'              method='ds', data=ddf.dat,meta.data=list(width=4))
-#' ddf.2 <- ddf(dsmodel = ~mcds(key = "hr", formula = ~ size),
-#'              method='ds', data=ddf.dat,meta.data=list(width=4))
-#'
-#' model.names <- list("CD"=c("ddf.1","ddf.2"), "WD"=c("ddf.1","ddf.2"),
-#'                    "UnidDol"=c("ddf.1","ddf.2"))
-#' ddf.models  <- list("ddf.1" = ddf.1, "ddf.2" = ddf.2)
-#'
-#' unidentified.code.definitions <- list("UnidDol" = c("CD","WD"))
-#' bootstrap.options             <- list(resample="samples", n=10, quantile.type = 7)
-#'
-#' results<- execute.multi.analysis(
-#'              species.code = names(model.names),
-#'              unidentified.sightings = unidentified.code.definitions,
-#'              models.by.species.code = model.names,
-#'              ddf.model.objects = ddf.models,
-#'              ddf.model.options = list(criterion="AIC"),
-#'              region.table = region.table,
-#'              sample.table = sample.table,
-#'              obs.table = obs.table,
-#'              bootstrap = TRUE,
-#'              bootstrap.option = bootstrap.options)
-#'
+#' # Set up mads data:
+#' 
+#' # A vector of the species names
+#' species.codes <- c("CD", "WSD", "Unid")
+#' 
+#' # A list defining which species the unidentified categories could be
+#' unid.defs <- list("Unid" = c("CD", "WSD"))
+#' 
+#' # Specify which models are to be tried for each species code
+#' mod.uncert <- list("CD" = c("df.all.hn", "df.all.hr"),
+#'                    "WSD" = c("df.all.hn", "df.all.hr"),
+#'                    "Unid" = c("df.all.hn", "df.all.hr"))
+#'                    
+#' # Provide the models in a named list and the selection criteria
+#' models <- list("df.all.hn" = df.all.hn,
+#'                "df.all.hr" = df.all.hr)
+#' model.opts <- list(criterion = "AIC")
+#' 
+#' \donttest{
+#' # Bootstrap options
+#' bootstrap.opts <- list(resample = 'samples', n=999)
+#' 
+#' #Warning this will take some time to run!
+#' results<- execute.multi.analysis( species.code = species.codes,
+#'                                   unidentified.sightings = unid.defs,
+#'                                   models.by.species.code = mod.uncert, 
+#'                                   ddf.model.objects = models, 
+#'                                   ddf.model.options = model.opts, 
+#'                                   region.table = region.table, 
+#'                                   sample.table = sample.table, 
+#'                                   obs.table = obs.table, 
+#'                                   bootstrap = TRUE, 
+#'                                   bootstrap.option = bootstrap.opts)
 #' }
 #'
+#' #Short example to run as per CRAN requirements - 
+#' #   warning only 1 repetition, results not interpretable!
+#' bootstrap.opts <- list(resample = 'samples', n=1)
+#' 
+#' results<- execute.multi.analysis( species.code = species.codes,
+#'                                   unidentified.sightings = unid.defs,
+#'                                   models.by.species.code = mod.uncert, 
+#'                                   ddf.model.objects = models, 
+#'                                   ddf.model.options = model.opts, 
+#'                                   region.table = region.table, 
+#'                                   sample.table = sample.table, 
+#'                                   obs.table = obs.table, 
+#'                                   bootstrap = TRUE, 
+#'                                   bootstrap.option = bootstrap.opts)
+#'
+#' #These are simulated data and true abundances are: 
+#' #  CD (common dolphins) = 3000 
+#' #  WSD (white sided dolphins) =  1500
+#'               
+#' summary(results)                                   
+#' 
 execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, species.presence = NULL, covariate.uncertainty = NULL, models.by.species.code, ddf.model.objects, ddf.model.options = list(criterion="AIC", species.field.name = "species"), region.table, sample.table, obs.table, dht.options = list(convert.units = 1), bootstrap, bootstrap.options = list(resample="samples", n = 1, quantile.type = 7), silent = FALSE){
-
+  
   #create global variable to store error messages
   MAE.warnings <- NULL
-
+  
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #INPUT CHECKS AND INPUT PROCESSING
   #ddf models and model options
@@ -180,7 +217,7 @@ execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, 
   if(is.null(ddf.model.options$species.field.name)){
     ddf.model.options$species.field.name <- "species"
   }
-
+  
   #Species codes and unidentified sightings
   if(!is.null(unidentified.sightings)){
     species.code.definitions <- check.species.code.definitions(unidentified.sightings, species.code)
@@ -191,15 +228,15 @@ execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, 
   }
   unidentified.species     <- species.code.definitions$unidentified
   species.code.definitions <- species.code.definitions$species.code.definitions
-
+  
   #Species presence - if null it populates it
   species.presence         <- check.species.presence(species.presence, species.code, strata.name = as.character(region.table$Region.Label))
-
+  
   #Covariate uncertainty
   if(!is.null(covariate.uncertainty)){
     covariate.uncertainty    <- check.covar.uncertainty(covariate.uncertainty)
   }
-
+  
   #Bootstrap Options
   if(is.null(bootstrap.options$resample)){
     bootstrap.options$resample <- "samples"
@@ -213,7 +250,7 @@ execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, 
   check.bootstrap.options(bootstrap, bootstrap.options$resample, bootstrap.options$n, sample.table)
   bootstrap.options$n <- ifelse(bootstrap, bootstrap.options$n, 1)
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+  
   #Make master copies of all the datasets
   ddf.dat.master      <- get.datasets(models.by.species.code, ddf.model.objects)
   unique.model.names  <- ddf.dat.master$unique.model.names
@@ -221,71 +258,73 @@ execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, 
   ddf.dat.master      <- ddf.dat.master$ddf.dat.master
   obs.table.master    <- obs.table
   sample.table.master <- sample.table
-
+  
   #Create storage for results (only for the species codes not the unidentified codes)
   bootstrap.results <- create.result.arrays(species.code, species.code.definitions, region.table, clusters, bootstrap.options$n)
   bootstrap.ddf.statistics <- create.param.arrays(unique.model.names, ddf.model.objects, bootstrap.options$n, ddf.model.options$criterion)
-
+  
   #Set up a loop
   for(n in 1:bootstrap.options$n){
-
-      #if(!is.null(seed.array)){
-      #  set.seet(seed.array[n])
-      #}
-
-      #Resample Data
-      if(bootstrap){
-        ddf.dat.working <- resample.data(resample=bootstrap.options$resample, obs.table.master, sample.table.master, ddf.dat.master, double.observer)
-        obs.table       <- ddf.dat.working$obs.table
-        sample.table    <- ddf.dat.working$sample.table
-        ddf.dat.working <- ddf.dat.working$ddf.dat.working
-      }else{
-        ddf.dat.working <- ddf.dat.master
-      }
-
-      #Add uncertainty to covariates
-      if(!is.null(covariate.uncertainty)){
-        ddf.dat.working <- resample.covariates(ddf.dat.working, covariate.uncertainty, MAE.warnings)
-        MAE.warnings <- ddf.dat.working$MAE.warnings
-        ddf.dat.working <- ddf.dat.working$ddf.dat.working
-      }
-
-      #Fit ddf models to all species codes
-      ddf.results.list <- fit.ddf.models(ddf.dat.working, unique.model.names, ddf.model.objects, ddf.model.options$criterion, bootstrap.ddf.statistics, n, MAE.warnings)
-      if(length(ddf.results.list) > 1){
-        bootstrap.ddf.statistics <- ddf.results.list$bootstrap.ddf.statistics
-        ddf.results <- ddf.results.list$ddf.results
-        MAE.warnings <- ddf.results.list$mae.warnings
-      }else{
-        #If the ddf results are not valid for all species move to next bootstrap iteration
-        MAE.warnings <- ddf.results$mae.warnings
-        next
-      }
-
-      #Calculate densities and abundance for all species codes
-      dht.results <- calculate.dht(species.code, ddf.model.options$species.field.name, model.index, ddf.results, region.table, sample.table, obs.table, dht.options)
-
-      #Deal with unidentified sightings if present or format dht results if not
-      if(unidentified.species){
-        formatted.dht.results <- prorate.unidentified(dht.results, species.code.definitions, species.presence, clusters)
-      }else{
-        formatted.dht.results <- format.dht.results(dht.results, species.code, clusters)
-      }
-
-      #Format / Record results
-      bootstrap.results <- accumulate.results(n, bootstrap.results, formatted.dht.results, clusters)
-
+    
+    #if(!is.null(seed.array)){
+    #  set.seet(seed.array[n])
+    #}
+    
+    #Resample Data
+    if(bootstrap){
+      ddf.dat.working <- resample.data(resample=bootstrap.options$resample, obs.table.master, sample.table.master, ddf.dat.master, double.observer)
+      obs.table       <- ddf.dat.working$obs.table
+      sample.table    <- ddf.dat.working$sample.table
+      ddf.dat.working <- ddf.dat.working$ddf.dat.working
+    }else{
+      ddf.dat.working <- ddf.dat.master
+    }
+    
+    #Add uncertainty to covariates
+    if(!is.null(covariate.uncertainty)){
+      ddf.dat.working <- resample.covariates(ddf.dat.working, covariate.uncertainty, MAE.warnings)
+      MAE.warnings <- ddf.dat.working$MAE.warnings
+      ddf.dat.working <- ddf.dat.working$ddf.dat.working
+    }
+    
+    #Fit ddf models to all species codes
+    ddf.results.list <- fit.ddf.models(ddf.dat.working, unique.model.names, ddf.model.objects, ddf.model.options$criterion, bootstrap.ddf.statistics, n, MAE.warnings)
+    if(length(ddf.results.list) > 1){
+      bootstrap.ddf.statistics <- ddf.results.list$bootstrap.ddf.statistics
+      ddf.results <- ddf.results.list$ddf.results
+      MAE.warnings <- ddf.results.list$mae.warnings
+    }else{
+      #If the ddf results are not valid for all species move to next bootstrap iteration
+      MAE.warnings <- ddf.results$mae.warnings
+      next
+    }
+    
+    #Calculate densities and abundance for all species codes
+    dht.results <- calculate.dht(species.code, ddf.model.options$species.field.name, model.index, ddf.results, region.table, sample.table, obs.table, dht.options)
+    
+    #Deal with unidentified sightings if present or format dht results if not
+    if(unidentified.species){
+      formatted.dht.results <- prorate.unidentified(dht.results, species.code.definitions, species.presence, clusters)
+    }else{
+      formatted.dht.results <- format.dht.results(dht.results, species.code, clusters)
+    }
+    
+    #Format / Record results
+    bootstrap.results <- accumulate.results(n, bootstrap.results, formatted.dht.results, clusters)
+    
+    #Progress counter
+    if(!silent){
+      percent.complete <- round((n/bootstrap.options$n)*100, 1)
+      message("\r  ", percent.complete, "% complete      \r", appendLF = FALSE)
+    }
+    
   }#next iteration
-
-  #Debugging
-  #save(bootstrap.results, file = "/Users/laura/mads/bootstrap.results.robj")
-  #cat("saving bootstrap results")
-
+  
   #process results
   results <- process.bootstrap.results(bootstrap.results, model.index, clusters, bootstrap.ddf.statistics, bootstrap.options$quantile.type, analysis.options = list(bootstrap = bootstrap, n = bootstrap.options$n, covariate.uncertainty = covariate.uncertainty, clusters = clusters, double.observer = double.observer, unidentified.species = unidentified.species, species.code.definitions = species.code.definitions, model.names = models.by.species.code))
   #process warning messages
   process.warnings(MAE.warnings)
-
+  
   #return results
   class(results) <- "ma"
   class(results$analysis.options) <- "ma.analysis"
@@ -299,7 +338,7 @@ execute.multi.analysis <- function(species.code, unidentified.sightings = NULL, 
       class(results$unidentified[[sp]]) <- "ma.unid"
     }
   }
-
+  
   return(results)
 }
 

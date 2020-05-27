@@ -15,7 +15,7 @@
 #' @param clusters boolean whether observations are clusters of individuals
 #' of identified species codes corresponding to which species are present in 
 #' each strata.
-#' @return a list of proprated results with an element for each species
+#' @return a list of pro-rated results with an element for each species
 #' @note Internal function not intended to be called by user.
 #' @author Laura Marshall
 #'
@@ -74,7 +74,7 @@ prorate.unidentified <- function(dht.results, species.code.definitions, species.
       
       #check unidentifed category has abundance in this strata if not next
       unid.abundance <- dht.results[[unidentified.codes[unid]]]$individuals$N$Estimate[dht.results[[unidentified.codes[unid]]]$individuals$N$Label == strata[st]]
-      #cat("unid.abundance: ", unid.abundance, ", class(unid.abundance): ", class(unid.abundance), fill=T)
+      #message("unid.abundance: ", unid.abundance, ", class(unid.abundance): ", class(unid.abundance), fill=T)
       if(length(unid.abundance) == 0){                                          #CHECK WHEN THIS IS EMPTY!!! CAN NO LONGER FIND A PROBLEM
         next
       }else if(unid.abundance == 0){                
